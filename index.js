@@ -67,3 +67,52 @@ class FloatingDropdown {
         if (this.contentVisible) this.#alignContent();
     }
 }
+
+class Dropdown {
+    constructor(trigger, content) {
+        this.trigger = trigger;
+        this.content = content;
+
+        this.element = document.createElement('div');
+        this.element.append(this.trigger, this.content);
+
+        this.content.style.display = 'none';
+
+        this.trigger.addEventListener('click', () => {
+            this.toggleContent();
+        });
+
+        document.addEventListener('click', (e) => {
+            if (this.#isDropdownElement(e.target)) return;
+            this.contentVisible = false;
+        });
+    }
+
+    get contentVisible() {
+        return this.content.style.display === 'none' ? false : true;
+    }
+
+    set contentVisible(value) {
+        if (value === false) {
+            this.content.style.display = 'none';
+        } else if (value === true) {
+            this.content.style.display = '';
+        }
+    }
+
+    #isDropdownElement(target) {
+        const dropdownElements = Array.from(
+            this.element.getElementsByTagName('*')
+        );
+
+        const dropdownContainsTarget = dropdownElements.some(
+            (element) => element === target
+        );
+
+        return dropdownContainsTarget;
+    }
+
+    toggleContent() {
+        this.contentVisible = !this.contentVisible;
+    }
+}
