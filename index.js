@@ -116,3 +116,6 @@ class Dropdown {
         this.contentVisible = !this.contentVisible;
     }
 }
+
+module.exports.FloatingDropdown = FloatingDropdown;
+module.exports.Dropdown = Dropdown;
